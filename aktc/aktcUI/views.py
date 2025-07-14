@@ -268,11 +268,11 @@ class LocationListAPIView(generics.ListAPIView):
     #     # user = self.request.user if self.request.user.is_authenticated else None
 
     #     if user:
-    #         return Booking.objects.filter(email=user.email).order_by('-book_created')
+    #         return Booking.objects.filter(email=user.email).order_by('-book_created_at')
     #     elif email:
-    #         return Booking.objects.filter(email=email).order_by('-book_created')
+    #         return Booking.objects.filter(email=email).order_by('-book_created_at')
     #     else:
-    #         return Booking.objects.all().order_by('-book_created')
+    #         return Booking.objects.all().order_by('-book_created_at')
 
 
 class BookingListAPIView(generics.ListAPIView):
@@ -284,11 +284,11 @@ class BookingListAPIView(generics.ListAPIView):
         user = self.request.user if self.request.user.is_authenticated else None
 
         if user:
-            return Booking.objects.filter(email=user.email).order_by('-book_created')
+            return Booking.objects.filter(email=user.email).order_by('-book_created_at')
         elif email:
-            return Booking.objects.filter(email=email).order_by('-book_created')
+            return Booking.objects.filter(email=email).order_by('-book_created_at')
         else:
-            return Booking.objects.all().order_by('-book_created')
+            return Booking.objects.all().order_by('-book_created_at')
 
 
 class FeedbackListAPIView(generics.ListAPIView):

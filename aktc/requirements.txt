@@ -20,3 +20,4 @@ rjsmin==1.2.2
 sqlparse==0.5.3
 text-unidecode==1.3
 tzdata==2025.2
+"gunicorn" 

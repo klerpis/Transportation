@@ -1,0 +1,492 @@
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Card, CardContent, Typography, 
+  Button, Grid, CircularProgress, 
+  Modal, TextField, Stack, Divider
+} from "@mui/material";
+import TripSearchForm from "../components/TripSearchForm";
+import MapView from "../components/map/MapView";
+import FeedbackDialog from "../components/feedback/FeedbackDialog";
+import axios from "../api/axios";
+
+
+export default function BookingsPage() {
+  const [bookings, setBookings] = useState([]);
+  const [trips, setTrips] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [bookingForm, setBookingForm] = useState({ email: "", first_name: "", last_name: "", passenger_count: 1 });
+
+  useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const email = localStorage.getItem("user_email") || "test@example.com";
+        const res = await axios.get(`/bookings/?email=${email}`);
+        setBookings(res.data);
+      } catch (e) {
+        console.error("Error fetching bookings", e);
+      }
+    };
+    fetchBookings();
+  }, []);
+
+  const handleSearch = async ({ from, to, date }) => {
+    setSearching(true);
+    try {
+      const res = await axios.get(`/trips/?from=${from}&to=${to}&date=${date}`);
+      setTrips(res.data);
+    } catch {
+      alert("Error fetching trips");
+    } finally {
+      setSearching(false);
+    }
+  };
+
+  const handleBook = (trip) => {
+    setSelectedTrip(trip);
+    setShowBookingModal(true);
+  };
+
+  const submitBooking = async () => {
+    try {
+      const bookingData = {
+        ...bookingForm,
+        departure_date: selectedTrip.trip_departure_date,
+        departure_time: selectedTrip.trip_departure_time,
+        location_from: selectedTrip.route.route_from,
+        destination_to: selectedTrip.route.route_to,
+        trip: selectedTrip.trip_id
+      };
+      const res = await axios.post("/bookings/create/", bookingData);
+      alert(`Booking Confirmed! ID: ${res.data.booking_id}`);
+      setShowBookingModal(false);
+    } catch (e) {
+      alert("Booking failed");
+    }
+  };
+
+  const upcomingBookings = bookings.filter(b => new Date(b.departure_date) >= new Date());
+  // const pastBookings = bookings.filter(b => new Date(b.departure_date) < new Date());
+
+
+  const pastBookings = [
+    {
+      id: 'C789',
+      from_location: 'Enugu',
+      to_location: 'Jos',
+      departure_date: '2025-05-01',
+      departure_time: '07:30 AM',
+      passenger_count: 10,
+      status: 'completed',
+      isUpcoming: false,
+      feedbackGiven: true,
+      feedbackResolved: false,
+      feedbackDeadline: '2025-05-01T12:00:00Z'
+    },
+    {
+      id: 'G381',
+      from_location: 'Imo',
+      to_location: 'Abuja',
+      departure_date: '2025-06-30',
+      departure_time: '07:30 AM',
+      passenger_count: 10,
+      status: 'completed',
+      isUpcoming: false,
+      feedbackGiven: false,
+      feedbackResolved: false,
+      feedbackDeadline: '2025-06-31T12:00:00Z'
+    },
+    {
+      id: 'Q442',
+      from_location: 'Kaduna',
+      to_location: 'Ibadan',
+      departure_date: '2025-05-01',
+      departure_time: '07:30 AM',
+      passenger_count: 10,
+      status: 'completed',
+      isUpcoming: false,
+      feedbackGiven: false,
+      feedbackResolved: false,
+      feedbackDeadline: '2025-05-01T12:00:00Z'
+    },
+    {
+      id: 'D012',
+      from_location: 'Benin',
+      to_location: 'Ibadan',
+      departure_date: '2025-04-18',
+      departure_time: '05:00 PM',
+      passenger_count: 10,
+      status: 'cancelled',
+      isUpcoming: false,
+      feedbackGiven: false,
+      feedbackResolved: false,
+      feedbackDeadline: '2025-04-18T12:00:00Z'
+    },
+
+    {
+      id: 'F132',
+      from_location: 'Niger',
+      to_location: 'Cross River',
+      departure_date: '2025-05-12',
+      departure_time: '05:00 PM',
+      passenger_count: 10,
+      status: 'completed',
+      isUpcoming: false,
+      feedbackGiven: true,
+      feedbackResolved: true,
+      feedbackDeadline: '2025-05-13T12:00:00Z'
+    },
+  ];
+
+
+
+  return (
+    <Box p={3}>
+      <Typography variant="h4" gutterBottom>Book a Trip</Typography>
+      <TripSearchForm onSearch={handleSearch} />
+
+      {searching ? <CircularProgress /> : (
+        <Grid container spacing={2} mt={2}>
+          {trips.map(trip => (
+            <Grid item xs={12} sm={6} md={4} key={trip.trip_id}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">{trip.from_location} → {trip.to_location}</Typography>
+                  <Typography>{trip.trip_departure_date} at {trip.trip_departure_time}</Typography>
+                  <Typography>Status: {trip.status}</Typography>
+                  <Button onClick={() => handleBook(trip)} variant="contained" sx={{ mt: 1 }}>Book</Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+
+      <Divider sx={{ my: 4 }} />
+
+      <Typography variant="h4" gutterBottom>My Bookings</Typography>
+      <Typography variant="h6" mt={2}>Upcoming</Typography>
+      <Stack spacing={2}>
+        {upcomingBookings.map(b => (
+          <Card key={b.booking_id}>
+            <CardContent>
+              <Typography>{b.from_location} → {b.to_location}</Typography>
+              <Typography>{b.departure_date} — {b.departure_time}</Typography>
+              <Typography>Seats: {b.passenger_count}</Typography>
+              <Typography>Status: {b.status}</Typography>
+            </CardContent>
+          </Card>
+        ))}
+      </Stack>
+
+      <Typography variant="h6" mt={4}>Past</Typography>
+      <Stack spacing={2}>
+        {pastBookings.map(b => (
+          <Card key={b.booking_id}>
+            <CardContent>
+              <Typography>{b.from_location} → {b.to_location}</Typography>
+              <Typography>{b.departure_date} — {b.departure_time}</Typography>
+              <Typography>Seats: {b.passenger_count}</Typography>
+              <Typography>Status: {b.status}</Typography>
+              <Button>Leave Feedback</Button>
+            </CardContent>
+          </Card>
+        ))}
+      </Stack>
+
+      {/* Booking Modal */}
+      <Modal open={showBookingModal} onClose={() => setShowBookingModal(false)}>
+        <Box sx={{ bgcolor: 'white', p: 4, m: 'auto', mt: 10, width: 400, borderRadius: 2 }}>
+          <Typography variant="h6" gutterBottom>Confirm Booking</Typography>
+          <Stack spacing={2}>
+            <TextField label="Email" name="email" value={bookingForm.email} onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })} />
+            <TextField label="First Name" name="first_name" value={bookingForm.first_name} onChange={(e) => setBookingForm({ ...bookingForm, first_name: e.target.value })} />
+            <TextField label="Last Name" name="last_name" value={bookingForm.last_name} onChange={(e) => setBookingForm({ ...bookingForm, last_name: e.target.value })} />
+            <TextField type="number" label="Passengers" name="passenger_count" value={bookingForm.passenger_count} onChange={(e) => setBookingForm({ ...bookingForm, passenger_count: parseInt(e.target.value) })} />
+            <Button variant="contained" onClick={submitBooking}>Confirm</Button>
+          </Stack>
+        </Box>
+      </Modal>
+
+      {/* <MapView /> */}
+      {/* <FeedbackDialog /> */}
+    </Box>
+  );
+}
+
+
+
+
+
+
+// import { Typography, TextField, Select, MenuItem, 
+//     FormControl, InputLabel, Box, Grid } from '@mui/material';
+// import { useState } from 'react';
+
+// import BookingsSection from '../components/bookings/BookingsSection';
+// import FeedbackDialog from '../components/feedback/FeedbackDialog';
+// import TripSearchForm from "../components/TripSearchForm";
+
+// import Dialog from '@mui/material/Dialog';
+// import MapView from '../components/map/MapView';
+
+// import axios from "../api/axios";
+
+
+
+
+
+// export default function BookingsPage() {
+//     const [search, setSearch] = useState('');
+//     const [statusFilter, setStatusFilter] = useState('All');
+//     const [dateFilter, setDateFilter] = useState('');
+    
+
+//     const [openMap, setOpenMap] = useState(false);
+//     const [mapCoords, setMapCoords] = useState([6.5244, 3.3792]); // Lagos default
+
+
+//     const [feedbackModalOpen, setFeedbackModalOpen] = useState(false);
+//     const [selectedBooking, setSelectedBooking] = useState(null);
+
+//     const [trips, setTrips] = useState([]);
+//     const [searching, setSearching] = useState(false);
+
+
+//     const handleOpenFeedbackModal = (booking) => {
+//       setSelectedBooking(booking);
+//       setFeedbackModalOpen(true);
+//     };
+
+//     const handleSearch = async ({ from, to, date }) => {
+//       setSearching(true);
+//       try {
+//         const res = await axios.get(`/trips/?from=${from}&to=${to}&date=${date}`);
+//         setTrips(res.data);
+//       } catch {
+//         alert("Error fetching trips");
+//       } finally {
+//         setSearching(false);
+//       }
+//     };
+
+
+
+//     const handleFeedbackSubmit = ({ bookingId, rating, text }) => {
+//       console.log('Submitted feedback:', { bookingId, rating, text });
+
+//       // Optional: update booking data locally to simulate state change
+//       // setBookings(prev =>
+//       //   prev.map((b) =>
+//       //     b.id === bookingId ? { ...b, feedbackGiven: true } : b
+//       //   )
+//       // );
+//     };
+  
+    
+//   const upcomingBookings = [
+//     {
+//       id: 'A123',
+//       from: 'Lagos',
+//       to: 'Abuja',
+//       date: '2025-07-12',
+//       time: '08:00 AM',
+//       status: 'confirmed',
+//       isUpcoming: true,
+//       feedbackGiven: false,
+//       feedbackResolved: false,
+//       feedbackDeadline: '2025-07-12T12:00:00Z'
+
+//     },
+//     {
+//       id: 'B456',
+//       from: 'Port Harcourt',
+//       to: 'Calabar',
+//       date: '2025-07-15',
+//       time: '12:00 PM',
+//       status: 'confirmed',
+//       isUpcoming: true,
+//       feedbackGiven: false,
+//       feedbackResolved: false,
+//       feedbackDeadline: '2025-07-15T12:00:00Z'
+//     },
+//   ];
+
+//   const pastBookings = [
+//     {
+//       id: 'C789',
+//       from: 'Enugu',
+//       to: 'Jos',
+//       date: '2025-05-01',
+//       time: '07:30 AM',
+//       status: 'completed',
+//       isUpcoming: false,
+//       feedbackGiven: true,
+//       feedbackResolved: false,
+//       feedbackDeadline: '2025-05-01T12:00:00Z'
+//     },
+//     {
+//       id: 'G381',
+//       from: 'Imo',
+//       to: 'Abuja',
+//       date: '2025-06-30',
+//       time: '07:30 AM',
+//       status: 'completed',
+//       isUpcoming: false,
+//       feedbackGiven: false,
+//       feedbackResolved: false,
+//       feedbackDeadline: '2025-06-31T12:00:00Z'
+//     },
+//     {
+//       id: 'Q442',
+//       from: 'Kaduna',
+//       to: 'Ibadan',
+//       date: '2025-05-01',
+//       time: '07:30 AM',
+//       status: 'completed',
+//       isUpcoming: false,
+//       feedbackGiven: false,
+//       feedbackResolved: false,
+//       feedbackDeadline: '2025-05-01T12:00:00Z'
+//     },
+//     {
+//       id: 'D012',
+//       from: 'Benin',
+//       to: 'Ibadan',
+//       date: '2025-04-18',
+//       time: '05:00 PM',
+//       status: 'cancelled',
+//       isUpcoming: false,
+//       feedbackGiven: false,
+//       feedbackResolved: false,
+//       feedbackDeadline: '2025-04-18T12:00:00Z'
+//     },
+
+//     {
+//       id: 'F132',
+//       from: 'Niger',
+//       to: 'Cross River',
+//       date: '2025-05-12',
+//       time: '05:00 PM',
+//       status: 'completed',
+//       isUpcoming: false,
+//       feedbackGiven: true,
+//       feedbackResolved: true,
+//       feedbackDeadline: '2025-05-13T12:00:00Z'
+//     },
+//   ];
+
+//   const handleCancel = (id) => {
+//     console.log(`Cancel booking: ${id}`);
+//     // Optional: add confirmation dialog
+//   };
+
+//   const handleTrack = (id) => {
+//     console.log(`Track booking: ${id}`);
+//     // Later: redirect to live journey view
+//     // Simulate GPS coords — use real data later!
+//     setMapCoords([6.5244, 3.3792]);
+//     setOpenMap(true);
+//   };
+
+
+//     const filterBookings = (bookings) =>
+//     bookings.filter((b) => {
+//         const matchesSearch =
+//         b.to.toLowerCase().includes(search.toLowerCase()) ||
+//         b.from.toLowerCase().includes(search.toLowerCase());
+
+//         let matchesStatus = statusFilter ? b.status === statusFilter : true;
+//         const matchesDate = dateFilter ? b.date === dateFilter : true;
+
+//         matchesStatus = statusFilter.toLowerCase() === 'all' ? true : matchesStatus;
+
+
+//         return matchesSearch && matchesStatus && matchesDate;
+//     });
+
+//     const filteredUpcoming = filterBookings(upcomingBookings);
+//     const filteredPast = filterBookings(pastBookings);
+
+
+//   return (
+//     <>
+
+//         <Dialog open={openMap} onClose={() => setOpenMap(false)} fullWidth maxWidth="md">
+//             <MapView coordinates={mapCoords} />
+//         </Dialog>
+
+//         {selectedBooking && (
+//           <FeedbackDialog
+//             open={feedbackModalOpen} onClose={() => setFeedbackModalOpen(false)}
+//             onSubmit={handleFeedbackSubmit} booking={selectedBooking}/>)}
+
+    
+//         {/* FILTER SECTION */}
+//         <Box sx={{ my: 3 }}>
+//             <Grid container spacing={2}>
+//                 <Grid item xs={12} md={4}>
+//                   <TextField
+//                     label="Search Destination" fullWidth
+//                     value={search} onChange={(e) => setSearch(e.target.value)}/>
+//                 </Grid>
+
+//                 <Grid item xs={12} md={4}>
+//                   <FormControl fullWidth>
+//                       <InputLabel>Status</InputLabel>
+//                       <Select
+//                       value={statusFilter}
+//                       label="Status"
+//                       onChange={(e) => setStatusFilter(e.target.value)}
+//                       >
+//                       <MenuItem value="All">All</MenuItem>
+//                       <MenuItem value="confirmed">Confirmed</MenuItem>
+//                       <MenuItem value="cancelled">Cancelled</MenuItem>
+//                       <MenuItem value="completed">Completed</MenuItem>
+//                       </Select>
+//                   </FormControl>
+//                 </Grid>
+
+//                 <Grid item xs={12} md={4}>
+//                 <TextField
+//                     label="Date (YYYY-MM-DD)"
+//                     fullWidth
+//                     value={dateFilter}
+//                     onChange={(e) => setDateFilter(e.target.value)}
+//                 />
+//                 </Grid>
+//             </Grid>
+//         </Box>
+
+    
+//         <Box>
+//         <Typography variant="h4" gutterBottom>
+//             My Bookings
+//         </Typography>
+
+//         <BookingsSection
+//         title="Upcoming Trips"
+//         bookings={filteredUpcoming}
+//         onCancel={handleCancel}
+//         onTrack={handleTrack}
+//         handleOpenFeedbackModal={handleOpenFeedbackModal}
+//         />
+
+//         <BookingsSection
+//         title="Past Trips"
+//         bookings={filteredPast}
+//         onCancel={handleCancel}
+//         onTrack={handleTrack}
+//         handleOpenFeedbackModal={handleOpenFeedbackModal}
+
+//         />
+
+//     </Box>
+//     </>
+//   );
+// }
+
+
+

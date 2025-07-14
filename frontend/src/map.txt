@@ -1,0 +1,155 @@
+import { MapContainer, TileLayer, Marker, Popup, Polyline 
+        } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import { useEffect, useState } from "react";
+import axios from "../../api/axios";
+
+import { Snackbar, Alert } from "@mui/material";
+
+
+
+function getDistanceKm(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Earth radius in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+
+// new map view that uses tripid or coordinates, if no trip id
+// use coordinate, but never both - at least in concept
+export default function MapView({ coordinates, tripId }) {
+  const [lat, lng] = coordinates;
+  const [tripData, setTripData] = useState(null);
+  const [busPosition, setBusPosition] = useState(null);
+  const [showAlert, setShowAlert] = useState(false);
+
+  // const tripId = "some-trip-id"; // You can pass this as a prop or route param
+  useEffect(() => {
+    const fetchTrip = async () => {
+      const res = await axios.get(`/trips/live/${tripId}/`);
+      const { latitude, longitude, dest_lat, dest_lng } = res.data;
+
+      setTripData(res.data);
+      setBusPosition([res.data.latitude, res.data.longitude]);
+      
+      const distanceToDest = getDistanceKm(latitude, longitude, dest_lat, dest_lng);
+      if (distanceToDest < 1.0) {
+        alert("🛑 You're nearing your destination!");
+      }
+      if (distanceToDest < 1.0 && !showAlert) {
+        setShowAlert(true);
+      }
+
+    
+    };
+
+    if (tripId) {
+      fetchTrip();
+      const interval = setInterval(fetchTrip, 10000); // refresh every 10s
+      return () => clearInterval(interval);
+
+    }
+    
+  });
+  // }, [tripId]);
+
+  if (tripId) {
+    if (!tripData) return <p>Loading trip...</p>;
+    
+  }
+  const origin = tripId  ? [tripData.origin_lat, tripData.origin_lng] : '';
+  const destination = tripId  ? [tripData.dest_lat, tripData.dest_lng] : '';
+  const bus = tripId  ? busPosition : '';
+
+
+  return (
+      <>
+
+    <MapContainer center={[lat, lng]} zoom={13} style={{ height: '400px', width: '100%' }}>
+      <TileLayer
+        attribution='&copy; OpenStreetMap contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      { tripId && (
+        <>
+          <Marker position={origin}><Popup>Origin</Popup></Marker>
+          <Marker position={destination}><Popup>Destination</Popup></Marker>
+        </>)
+
+      }
+
+      {tripId && bus && (
+        <Marker position={bus}>
+          <Popup>🚌 Bus Location</Popup>
+        </Marker>
+      )}
+
+      {tripId && <Polyline positions={[origin, bus, destination]} color="blue" />} 
+       
+      
+      
+      {/* <Marker position={[lat, lng]}>
+        <Popup>You're here.</Popup>
+      </Marker> */}
+
+      
+    </MapContainer>
+
+      <Snackbar open={showAlert} autoHideDuration={6000} onClose={() => setShowAlert(false)}>
+            <Alert severity="info" onClose={() => setShowAlert(false)} sx={{ width: '100%' }}>
+              🛑 You are approaching your destination!
+            </Alert>
+      </Snackbar>
+    </>
+  );
+}
+
+// previous map view that uses a set coordinate to display map
+// export default function MapView({ coordinates }) {
+//   const [lat, lng] = coordinates;
+
+//   return (
+//     <MapContainer center={[lat, lng]} zoom={13} style={{ height: '400px', width: '100%' }}>
+//       <TileLayer
+//         attribution='&copy; OpenStreetMap contributors'
+//         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+//       />
+//       <Marker position={[lat, lng]}>
+//         <Popup>You're here.</Popup>
+//       </Marker>
+//     </MapContainer>
+//   );
+// }
+
+
+// current live journey usage of the mapview
+import MapView from '../components/map/MapView'; // same Leaflet map we used
+
+
+export default function LiveJourneyPage() {
+
+  return (
+    <Box sx={{ p: 3 }}>
+      <Typography variant="h4" gutterBottom>
+        Live Journey Tracking
+      </Typography>
+      <Typography variant="body2" gutterBottom>
+        Track your vehicle in real time as it moves between locations.
+      </Typography>
+
+      <Paper elevation={7} sx={{ mt: 3, height: 400 }}>
+        <MapView coordinates={[6.5244, 3.3792]} /> {/* Lagos */}
+      </Paper>
+    </Box>
+  );
+}
+
+

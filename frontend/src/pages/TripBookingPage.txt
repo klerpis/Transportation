@@ -1,0 +1,290 @@
+
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Box,
+  Typography, Card, CardContent,
+  Grid, Button, CircularProgress
+} from "@mui/material";
+import axios from "../api/axios";
+import TripSearchForm from "../components/TripSearchForm";
+import BookOnlineIcon from '@mui/icons-material/BookmarkAdd';
+import TripModal from '../components/TripModal';
+
+
+
+export default function TripBookingPage() {
+  // const [trips, setTrips] = useState([]);
+  const [tripqs, setTrips] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [selectedTrip, setSelectedTrip] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const navigate = useNavigate();
+
+  const [form, setForm] = useState({
+      email: "",
+      first_name: "",
+      last_name: "",
+      passenger_count: 1,
+    });
+
+
+    const trips = [
+    {
+      id: 'C789',
+      from_location: 'Enugu',
+      to_location: 'Jos',
+      trip_departure_date: '2025-05-01',
+      trip_departure_time: '07:30 AM',
+      status: 'pending',
+      isUpcoming: false,
+      feedbackGiven: true,
+      feedbackResolved: false,
+      feedbackDeadline: '2025-05-01T12:00:00Z'
+    },
+    {
+      id: 'G381',
+      from_location: 'Imo',
+      to_location: 'Abuja',
+      trip_departure_date: '2025-06-30',
+      trip_departure_time: '07:30 AM',
+      status: 'pending',
+      isUpcoming: false,
+      feedbackGiven: false,
+      feedbackResolved: false,
+      feedbackDeadline: '2025-06-31T12:00:00Z'
+    },
+    {
+      id: 'Q442',
+      from_location: 'Kaduna',
+      to_location: 'Ibadan',
+      trip_departure_date: '2025-05-01',
+      trip_departure_time: '07:30 AM',
+      status: 'pending',
+      isUpcoming: false,
+      feedbackGiven: false,
+      feedbackResolved: false,
+      feedbackDeadline: '2025-05-01T12:00:00Z'
+    },
+    {
+      id: 'D012',
+      from_location: 'Benin',
+      to_location: 'Ibadan',
+      trip_departure_date: '2025-04-18',
+      trip_departure_time: '05:00 PM',
+      status: 'pending',
+      isUpcoming: false,
+      feedbackGiven: false,
+      feedbackResolved: false,
+      feedbackDeadline: '2025-04-18T12:00:00Z'
+    },
+
+    {
+      id: 'F132',
+      from_location: 'Niger',
+      to_location: 'Cross River',
+      trip_departure_date: '2025-05-12',
+      trip_departure_time: '05:00 PM',
+      status: 'pending',
+      isUpcoming: false,
+      feedbackGiven: true,
+      feedbackResolved: true,
+      feedbackDeadline: '2025-05-13T12:00:00Z'
+    },
+  ];
+
+  
+  const validateForm = () => {
+    const errors = {};
+    if (!form.email) errors.email = "Email is required";
+    if (!form.first_name) errors.first_name = "First name is required";
+    if (!form.last_name) errors.last_name = "Last name is required";
+    if (!form.passenger_count || form.passenger_count <= 0)
+      errors.passenger_count = "Passenger count must be at least 1";
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+
+
+  const handleSearch = async ({ from, to, date }) => {
+    setSearching(true);
+    try {
+      const res = await axios.get(`/trips/?from=${from}&to=${to}&date=${date}`);
+      setTrips(res.data);
+      
+    } catch (e) {
+      alert("Error fetching trips");
+    } finally {
+      setSearching(false);
+    }
+  };
+
+  const handleBookClick = (trip) => {
+    setForm({
+      email: "",
+      first_name: "",
+      last_name: "",
+      passenger_count: 1,
+    })
+
+    setFormErrors({
+      email: "",
+      first_name: "",
+      last_name: "",
+      passenger_count: 0,
+    })
+    setSelectedTrip(trip);
+    setShowModal(true);
+  };
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: name === "passenger_count" ? parseInt(value) : value }));
+  };
+
+const submitBooking = async () => {
+  if (!validateForm()) return;
+  try {
+    const payload = {
+      ...form,
+      departure_date: selectedTrip.trip_departure_date,
+      departure_time: selectedTrip.trip_departure_time,
+      location_from: selectedTrip.route.route_from,
+      destination_to: selectedTrip.route.route_to,
+      trip: selectedTrip.trip_id,
+      // status: selectedTrip.status,
+      // fare_per_seat: selectedTrip.fare_per_seat,
+
+    };
+    const res = await axios.post("/bookings/create/", payload);
+    alert(`✅ Booking Confirmed! Booking ID: ${res.data.booking_id}`);
+    setShowModal(false);
+  } catch {
+    navigate("/booking/confirmed");
+    // navigate("/booking/confirmed", { state: { booking: res.data } });
+    // alert("❌ Booking failed. Please try again.");
+  }
+};
+
+  console.log(selectedTrip)
+  const tripProps = {showModal, setShowModal, handleFormChange, 
+                    form, submitBooking, selectedTrip, formErrors}
+  
+  return (
+    <Box p={4}>
+      <Typography variant="h4" mb={3}>Search & Book a Trip</Typography>
+
+      <TripSearchForm onSearch={handleSearch} />
+
+      {searching ? (
+        <Box mt={4}><CircularProgress /></Box>
+      ) : (
+        <Grid container spacing={2} mt={2}>
+          {trips.map((trip) => (
+            <Grid item xs={12} sm={6} md={4} key={trip.trip_id}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6">{trip.from_location} → {trip.to_location}</Typography>
+                  <Typography variant="subtitle2">Date: {trip.trip_departure_date}</Typography>
+                  <Typography variant="subtitle2">Time: {trip.trip_departure_time}</Typography>
+                  <Typography variant="overline" mr={2}>Status: {trip.status}</Typography>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    sx={{ mt: 2 }}
+                    startIcon={<BookOnlineIcon />}
+                    onClick={() => handleBookClick(trip)}
+                  >
+                    Book This Trip
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      )}
+    
+      {/* Booking Modal */}
+      <TripModal {...tripProps} />
+
+    </Box>
+  );
+}
+
+
+
+
+
+// trip modal jsx
+
+import {
+  Box, Button,
+  Typography, TextField, 
+  Stack, Modal, Divider,
+} from "@mui/material";
+
+// import { useThemeMode } from '../../contexts/ThemeContext';
+import { useTheme } from '@mui/material/styles';
+
+
+const TripModal = ({showModal, setShowModal, handleFormChange, 
+                        form, submitBooking, selectedTrip, formErrors})=> {
+      // const { mode, toggleColorMode } = useThemeMode();
+      const theme = useTheme();
+    return (<Modal open={showModal} onClose={() => setShowModal(false)}>
+        <Box sx={{
+          
+          bgcolor: theme.palette.mode === 'dark' ? 'grey.900' : 'white', 
+          p: 4, width: 400,
+          m: 'auto', mt: 10, borderRadius: 2
+        }}>
+          <Typography variant="h6" gutterBottom>Passenger Info</Typography>
+          <Stack spacing={2}>
+            <TextField
+              label="Email" error={!!formErrors.email}
+              name="email" value={form.email}
+              onChange={handleFormChange} fullWidth
+            />
+            <TextField
+              label="First Name" name="first_name" error={!!formErrors.first_name}
+              value={form.first_name} onChange={handleFormChange} fullWidth
+            />
+            <TextField
+              label="Last Name" name="last_name" value={form.last_name}
+              onChange={handleFormChange} fullWidth error={!!formErrors.last_name}
+            />
+            <TextField
+              label="Passengers" name="passenger_count" type="number" error={!!formErrors.passenger_count}
+              value={form.passenger_count} onChange={handleFormChange} fullWidth
+            />
+            <Button variant="contained" onClick={submitBooking}>Confirm Booking</Button>
+          </Stack>
+          {/* Trip Summary Section */}
+            { selectedTrip && (
+                <Box my={2}>
+                    <Typography variant="subtitle1">Trip Summary</Typography>
+                    <Divider />
+                    <Typography mt={2} fontSize={14}>
+                        {selectedTrip.from_location} → {selectedTrip.to_location}
+                    </Typography>
+                    <Typography fontSize={14}>
+                        Date: {selectedTrip.trip_departure_date} @ {selectedTrip.trip_departure_time}
+                    </Typography>
+                    <Typography fontSize={14}>
+                        Fare per seat: ₦{selectedTrip.fare_per_seat || 5000}
+                    </Typography>
+                    <Typography fontSize={14} fontWeight="bold">
+                        Total: ₦{(selectedTrip.fare_per_seat || 5000) * form.passenger_count}
+                    </Typography>
+                </Box>
+            )}
+        </Box>
+
+      </Modal>
+    );
+};
+
+
+
+export default TripModal

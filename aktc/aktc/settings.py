@@ -25,9 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-%(x+i=f3z_zi1($wzhhu8x9bt5%jq&t1ahl+n^r^bvy*^i+jw%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://bookingaktc.onrender.com',]
 
 
 # Application definition
@@ -72,6 +73,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
+    'https://bookingaktc.onrender.com',
     # 'http://127.0.0.1:8000'
 ]
 # CORS_ALLOW_CREDENTIALS = True

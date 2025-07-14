@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:8000/api"; // adjust for production
+const baseURL = "https://bookingaktc.onrender.com/api"; // adjust for production
 
 const instance = axios.create({
   baseURL,

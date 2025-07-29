@@ -37,9 +37,10 @@ urlpatterns = [
     path('api/auth/token/refresh/',
          TokenRefreshView.as_view(), name='token_refresh'),
 
-    # path('api/', include('aktcUI.urls')),
+    path('api/', include('aktcUI.urls')),
     path('api/', include('accounts.urls')),
     path('api/', include('feedbacksystem.urls')),
+    path('api/', include('setupsystem.urls')),
     # path('', include('aktcUI.urls')),
     # path('api/', include('booking.urls')),
     # path('api/cusers/', include('cusers.urls')),

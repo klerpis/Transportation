@@ -1,0 +1,164 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %} Help{% endblock %}
+
+
+{% block nav-global %}
+
+
+{{ block.super }}
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="module">
+    <h1 class="module-header"><strong>AKTC HELP DESK</strong></h1>
+    <div class="module-body">
+        <h2
+        style="background: rgba(13, 199, 75, 0.432);"
+        >
+        <i>This is the helper page to guide the administrators on how to create, change and trigger events/action/permissions as well as navigate round the site.</h3>
+        </i>
+    </div>
+</div>
+
+<div class="module">
+    <h2>SCHEDULE SETUP SYSTEM</h2>
+    <div class="module-body">
+        <p>This guide follows a strict procedure on how to successfully 
+            setup trips for a specified amount of time (e.g 2 days, a week, month, 40days, year)
+        </p>
+    <div class="module" >
+    <h3>Step 1: Time Setup</h3>
+    <div class="form-row">
+        <ul>
+            <li>Departure Time: Create Several Time interval <br>
+                e.g [8:00am, 11:00am, 12:00pm, 2:00pm, 4:30pm]</li>
+            <li>Daily Schedule: Pick Multiple Departure times Created to create a cluster for a single day e.g [Wed: 8:00am, 2:00pm, 4:30pm]</li>
+            <p>some days may not carry the same departure schedule as others, <br> 
+                e.g sunday may only have one trip in the morning, while monday could have multiple trips in a day (up to 5 trips).
+                so the cluster should reflect the number of trip times in a day
+            </p>
+        </ul>
+    </div>
+    <h3>Step 2: Location Setup</h3>
+    <div class="form-row">
+        <ul>
+            <li>Location: add various locations and the relevant data</li>
+            <p>Fill in the neccessary information for the various location addresses <br>
+                like State, Local Government, Bus stop, street <br>
+                as well as geographical information like longitude and latitude (leave empty if unknown)
+
+            </p>
+            <li>Routes: setup different routes</li>
+            <p>
+                A route is a connection (journey) between two locations <br>
+                e.g <span style="background: rgba(57, 201, 38, 0.432);">AkwaIbom (Uyo) -> Cross River (Calabar)</span>
+                when adding, an option to immediately add a reverse route exist <br>
+                a checkbox - "Add reverse" <br>
+                this add the <span style="background: rgba(57, 201, 38, 0.432);">Cross River (Calabar) -> AkwaIbom (Uyo)</span> as well in one go <br>
+                Fare and the average Journey length are other needed data inputs
+            </p>
+
+        </ul>
+    </div>
+
+    <h3>Step 3: Generate Trips Using Schedule</h3>
+    <p>Trips are generated automatically based on data from the previous steps <br>
+    </p>
+    <div class="form-row">
+        <ul>
+            <li>Week Day Schedule:</li>
+            <p> - Input a start date</p>
+            <p> - input an end date (optional)</p>
+            <p> - input the daily time cluster <span style="background: rgba(57, 201, 38, 0.432);">(Daily Schedule)</span> you wish the following dates to follow</p>
+            <p> - Choose the Routes you wish to generate this Trips for (multiple routes can be pick at a time: Recommended)</p>
+            <p> - Save and Trips are Auto generated for those dates and time intervals</p>
+        </ul>
+    </div>
+
+
+</div>
+
+</div>
+
+<!-- <div class="module">
+    <h2>Step 2: Details</h2>
+    <div class="form-row">
+        Form fields for Step 2
+    </div>
+</div> -->
+
+<div class="module">
+    <h2>PASSENGER FEEDBACK SYSTEM</h2>
+    <div class="module-body">
+        <p> Admin can respond to passenger queries and approve reviews</p>
+        <p
+        style="background: rgba(116, 116, 230, 0.432);"
+        > (Further information will be updated to the feedback system)</p>
+    </div>
+    </div>
+</div>
+
+<div class="module">
+    <h2>AKTC CONTROL INTERFACE</h2>
+    <div class="module-body">
+        <p> This is where bookings are created and managed
+            <br>
+            as well as other needs, which include approvement of payment 
+            and monitoring of trips
+        </p>
+        <p
+        style="background: rgba(116, 116, 230, 0.432);"
+        > (Further information will be updated to the control system)</p>
+    </div>
+    </div>
+</div>
+
+
+
+    <div class="submit-row">
+    <div class="module">
+
+
+    <div class="module-body">
+        <ul>
+            <input type="submit" value="Previous" class="button">
+            <input type="submit" value="Next" class="default">
+        </ul>
+    </div>
+
+    </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+<!-- <div class="module">
+    <h2>Passenger Feedback System</h2>
+    <div class="module-body">
+        <p>This guide follows a strict procedure on how to successfully 
+            setup trips for a specified amount of time (e.g a week, month, 40days, year)
+        </p>
+    <div class="module" >
+        <h3>Step 1: Time Setup</h3>
+        <div class="form-row">
+            <ul>
+                <li>Departure Time: Create Several Time interval <br>
+                    e.g [8:00am, 11:00am, 12:00pm, 2:00pm, 4:30pm]</li>
+                <li>Daily Schedule: Pick Multiple Departure times Created to create a cluster for a single day e.g [Wed: 8:00am, 2:00pm, 4:30pm]</li>
+                <p>some days may not carry the same departure schedule as others, <br> 
+                    e.g sunday may only have one trip in the morning, while monday could have multiple trips in a day (up to 5 trips).
+                    so the cluster should reflect the number of trip times in a day
+                </p>
+            </ul>
+        </div>
+        </div>
+    </div>
+</div> -->

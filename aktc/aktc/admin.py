@@ -75,11 +75,15 @@ class BookTicketAdmin(ModelAdmin):
     form = forms.BookTicketForm
     inlines = [PaymentInline,]
     
-    list_display = ['id', 'customer_name', 'booking_id', 'trip_id', 'status' ]
+    list_display = ['id', 'customer_name', 'booking_id', 
+    # 'trip_id', 
+    'status' ]
     list_display_links = ['customer_name', 'booking_id']
     list_filter = ['status']
     list_editable = ['status']
-    search_fields = ['booking_id', 'customer_name', 'trip_id', 'payment_id']
+    search_fields = ['booking_id', 'customer_name', 
+    # 'trip_id', 
+    'payment_id']
     readonly_fields = ['booking_id']
 
     def customer_name(self, obj):

@@ -106,7 +106,7 @@ class Trip(models.Model):
 
     # leave blank
     trip_id = models.CharField(
-        max_length=40, unique=True, editable=False, blank=True)
+        max_length=40, unique=True, blank=True)
 
     route = models.ForeignKey(Route, on_delete=models.CASCADE)
     seats_booked = models.PositiveIntegerField(default=0)  # management side

@@ -346,11 +346,11 @@ class BookingListAPIView(generics.ListAPIView):
         # email = self.request.query_params.get('email')
         user = self.request.user if self.request.user.is_authenticated else None
 
-        querset = Booking.objects.filter(customer__user=user).first()
+        queryset = Booking.objects.all().filter(customer__user=user)
         if user:
-            # data = querset.filter(customer__user=user).order_by('-book_created_at')
+            # data = queryset.filter(customer__user=user).order_by('-book_created_at')
             # print("DATATATQ", data)
-            return querset 
+            return queryset 
         else:
             return Booking.objects.none() 
 

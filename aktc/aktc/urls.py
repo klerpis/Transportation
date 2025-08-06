@@ -18,6 +18,7 @@ from django.contrib import admin
 # from aktcUI.admin import aktc_admin_site
 from django.urls import path, re_path, include
 from . import views
+from django.views.static import serve as static_serve
 from .views import FrontendAppView
 from aktc.admin import aktc_admin_site, board_room
 from django.conf import settings
@@ -52,6 +53,8 @@ urlpatterns = [
 
     # *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     # *static(settings.STATIC_URL, document_root=settings.STATIC_ROOT),
+    re_path(r'^media/(?P<path>.*)$', static_serve, {'document_root': settings.MEDIA_ROOT}),
+    
     re_path(r'^.*$', FrontendAppView.as_view(),
             name='frontend'),  # catch-all for React
 ]

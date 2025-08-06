@@ -202,6 +202,10 @@ class BookingListSerializer(serializers.ModelSerializer):
         # Feedback.objects.filter(trip_books=obj).exists()
         return Feedback.objects.filter(trip_books=obj).exists()
 
+    # def get_feedback_submitted(self, obj):
+    #     # Feedback.objects.filter(trip_books=obj).exists()
+    #     return Feedback.objects.filter(trip_books__booking_id=obj.booking_id).exists()
+
     def get_feedback_deadline(self, obj):
         return obj.departure_date + timedelta(days=1, hours=12)
 

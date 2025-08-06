@@ -32,13 +32,13 @@ SECRET_KEY = 'django-insecure-%(x+i=f3z_zi1($wzhhu8x9bt5%jq&t1ahl+n^r^bvy*^i+jw%
 # SECRET_KEY = 'django-insecure-%(x+i=f3z_zi1($diuywzhhu8x9bt5%jqokdpij&t1ahl+n^r^bvy*^i+jw%'
 SECRET_KEY = os.environ.get('SECRET_KEY', default=SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
 # DEBUG = 'RENDER' not in os.environ
-# DEBUG = True
+DEBUG = True
 
 # ['bookingaktc.onrender.com', "localhost:8000", ]
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["bookingaktc.onrender.com", "localhost", '127.0.0.1']
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["bookingaktc.onrender.com", "localhost", '127.0.0.1']
 
 
 
@@ -88,8 +88,8 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:8000',
-    # 'http://127.0.0.1:3000',
-    # 'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://localhost:3000',
     'https://bookingaktc.onrender.com',
     # 'http://127.0.0.1:8000'
 ]
@@ -140,21 +140,21 @@ if os.getenv('RENDER'):
 
 
 else:
-    default = os.getenv("EXTERNAL_DATABASE_URL")
-    DATABASES = {
-        'default': dj_database_url.config(
-            # Replace this value with your local database's connection string.
-            default=default,
-            conn_max_age=600,
-            ssl_require=True
-            )
-    }
+    # default = os.getenv("EXTERNAL_DATABASE_URL")
     # DATABASES = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.sqlite3',
-    #         'NAME': BASE_DIR / 'db.sqlite3',
-    #     }
+    #     'default': dj_database_url.config(
+    #         # Replace this value with your local database's connection string.
+    #         default=default,
+    #         conn_max_age=600,
+    #         ssl_require=True
+    #         )
     # }
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 
@@ -221,7 +221,8 @@ STATICFILES_DIRS = [
     # BASE_DIR / "aktcUI" / "static",
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 
 if not DEBUG:
@@ -229,11 +230,27 @@ if not DEBUG:
     # and renames the files with unique names for each version to support long-term caching
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+    # This is the WhiteNoise configuration for media files
+    "media": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        "OPTIONS": {
+            "root": MEDIA_ROOT,
+        },
+    },
+}
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

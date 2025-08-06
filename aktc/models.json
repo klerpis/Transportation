@@ -1,0 +1,748 @@
+[
+{
+  "model": "aktcUI.customer",
+  "pk": 13,
+  "fields": {
+    "user": [
+      "kelvin"
+    ],
+    "firstname": "",
+    "middlename": null,
+    "surname": "",
+    "phone_number": null,
+    "email": ""
+  }
+},
+{
+  "model": "aktcUI.customer",
+  "pk": 14,
+  "fields": {
+    "user": [
+      "unicross"
+    ],
+    "firstname": "",
+    "middlename": null,
+    "surname": "",
+    "phone_number": null,
+    "email": "unicross@crutech.com"
+  }
+},
+{
+  "model": "aktcUI.bus",
+  "pk": 1,
+  "fields": {
+    "registration_number": "B4B27DBN2Q",
+    "bus_name": "Night bus 2015",
+    "bus_seat_num": 14,
+    "bus_status": "RN"
+  }
+},
+{
+  "model": "aktcUI.bus",
+  "pk": 2,
+  "fields": {
+    "registration_number": "NDU2BDEBY2",
+    "bus_name": "Day Shift Bus 2020",
+    "bus_seat_num": 14,
+    "bus_status": "RN"
+  }
+},
+{
+  "model": "aktcUI.busdetail",
+  "pk": 1,
+  "fields": {
+    "bus": 2,
+    "bus_driver": null
+  }
+},
+{
+  "model": "aktcUI.busdetail",
+  "pk": 2,
+  "fields": {
+    "bus": 1,
+    "bus_driver": null
+  }
+},
+{
+  "model": "aktcUI.paymentmethod",
+  "pk": 1,
+  "fields": {
+    "title": "Credit/Debit Card",
+    "name": "card",
+    "is_default": true,
+    "reference": null
+  }
+},
+{
+  "model": "aktcUI.paymentmethod",
+  "pk": 2,
+  "fields": {
+    "title": "Bank Transfer",
+    "name": "transfer",
+    "is_default": true,
+    "reference": null
+  }
+},
+{
+  "model": "aktcUI.paymentmethod",
+  "pk": 3,
+  "fields": {
+    "title": "Wallet Balance",
+    "name": "wallet",
+    "is_default": false,
+    "reference": null
+  }
+},
+{
+  "model": "aktcUI.paymentmethod",
+  "pk": 4,
+  "fields": {
+    "title": "Pay with Cash",
+    "name": "cash",
+    "is_default": false,
+    "reference": null
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 1,
+  "fields": {
+    "state": "AkwaIbom",
+    "local_government": "Uyo",
+    "bus_stop": "Aktc Main Bustop",
+    "street": "main street",
+    "lat": null,
+    "lng": null,
+    "image": "location/asaba-2.jpg",
+    "description": "",
+    "featured": true
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 2,
+  "fields": {
+    "state": "Cross River",
+    "local_government": "Calabar",
+    "bus_stop": "Main Gate Stop",
+    "street": "Etagbor",
+    "lat": null,
+    "lng": null,
+    "image": "location/Asaba_2w.jpg",
+    "description": "",
+    "featured": true
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 3,
+  "fields": {
+    "state": "Rivers",
+    "local_government": "Port Harcourt",
+    "bus_stop": "Ikwerre Road",
+    "street": "Ikwerre Road",
+    "lat": null,
+    "lng": null,
+    "image": "location/Summit_road_Asaba.jpeg",
+    "description": "",
+    "featured": true
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 4,
+  "fields": {
+    "state": "Rivers",
+    "local_government": "Gokana",
+    "bus_stop": "Elelenwo Street",
+    "street": "Elelenwo Street",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 5,
+  "fields": {
+    "state": "Benin",
+    "local_government": "Oredo",
+    "bus_stop": "Ring Road",
+    "street": "Ring Road",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 6,
+  "fields": {
+    "state": "Benin",
+    "local_government": "Egor",
+    "bus_stop": "Obazee Close",
+    "street": "Obazee Close",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 7,
+  "fields": {
+    "state": "Enugu",
+    "local_government": "Enugu North",
+    "bus_stop": "Opkara Avenue",
+    "street": "Opkara Avenue",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 8,
+  "fields": {
+    "state": "Enugu",
+    "local_government": "Enugu South",
+    "bus_stop": "Nnobi Street",
+    "street": "Nnobi Street",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 9,
+  "fields": {
+    "state": "Delta",
+    "local_government": "Asaba",
+    "bus_stop": "Abraka",
+    "street": "Isoko",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": "",
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 1,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 1,
+    "fare": 6000,
+    "journey_average_length": "03:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 2,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 2,
+    "fare": 6000,
+    "journey_average_length": "03:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 3,
+  "fields": {
+    "from_location": 3,
+    "to_destination": 1,
+    "fare": 9000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 4,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 3,
+    "fare": 9000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 5,
+  "fields": {
+    "from_location": 4,
+    "to_destination": 1,
+    "fare": 9000,
+    "journey_average_length": "05:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 6,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 4,
+    "fare": 9000,
+    "journey_average_length": "05:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 7,
+  "fields": {
+    "from_location": 5,
+    "to_destination": 1,
+    "fare": 10000,
+    "journey_average_length": "09:30:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 8,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 5,
+    "fare": 10000,
+    "journey_average_length": "09:30:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 9,
+  "fields": {
+    "from_location": 6,
+    "to_destination": 1,
+    "fare": 9000,
+    "journey_average_length": "09:22:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 10,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 6,
+    "fare": 9000,
+    "journey_average_length": "09:22:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 11,
+  "fields": {
+    "from_location": 7,
+    "to_destination": 1,
+    "fare": 11000,
+    "journey_average_length": "10:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 12,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 7,
+    "fare": 11000,
+    "journey_average_length": "10:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 13,
+  "fields": {
+    "from_location": 8,
+    "to_destination": 1,
+    "fare": 11000,
+    "journey_average_length": "10:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 14,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 8,
+    "fare": 11000,
+    "journey_average_length": "10:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 15,
+  "fields": {
+    "from_location": 3,
+    "to_destination": 2,
+    "fare": 5000,
+    "journey_average_length": "02:50:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 16,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 3,
+    "fare": 5000,
+    "journey_average_length": "02:50:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 17,
+  "fields": {
+    "from_location": 4,
+    "to_destination": 2,
+    "fare": 4500,
+    "journey_average_length": "02:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 18,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 4,
+    "fare": 4500,
+    "journey_average_length": "02:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 19,
+  "fields": {
+    "from_location": 5,
+    "to_destination": 2,
+    "fare": 7000,
+    "journey_average_length": "07:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 20,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 5,
+    "fare": 7000,
+    "journey_average_length": "07:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 21,
+  "fields": {
+    "from_location": 6,
+    "to_destination": 2,
+    "fare": 7000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 22,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 6,
+    "fare": 7000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 23,
+  "fields": {
+    "from_location": 7,
+    "to_destination": 2,
+    "fare": 11200,
+    "journey_average_length": "10:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 24,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 7,
+    "fare": 11200,
+    "journey_average_length": "10:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 25,
+  "fields": {
+    "from_location": 8,
+    "to_destination": 2,
+    "fare": 12000,
+    "journey_average_length": "11:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 26,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 8,
+    "fare": 12000,
+    "journey_average_length": "11:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 27,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 9,
+    "fare": 25000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 28,
+  "fields": {
+    "from_location": 9,
+    "to_destination": 2,
+    "fare": 25000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 1,
+  "fields": {
+    "hour": "08",
+    "minute": "00",
+    "meridian": "AM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 2,
+  "fields": {
+    "hour": "07",
+    "minute": "30",
+    "meridian": "AM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 3,
+  "fields": {
+    "hour": "10",
+    "minute": "30",
+    "meridian": "AM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 4,
+  "fields": {
+    "hour": "11",
+    "minute": "05",
+    "meridian": "AM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 5,
+  "fields": {
+    "hour": "12",
+    "minute": "05",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 6,
+  "fields": {
+    "hour": "02",
+    "minute": "00",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 7,
+  "fields": {
+    "hour": "04",
+    "minute": "25",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 8,
+  "fields": {
+    "hour": "07",
+    "minute": "30",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 9,
+  "fields": {
+    "hour": "09",
+    "minute": "15",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 10,
+  "fields": {
+    "hour": "11",
+    "minute": "30",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.dailyscheduletime",
+  "pk": 1,
+  "fields": {
+    "time": [
+      1,
+      2,
+      3,
+      6,
+      7
+    ]
+  }
+},
+{
+  "model": "setupsystem.dailyscheduletime",
+  "pk": 2,
+  "fields": {
+    "time": [
+      1,
+      4,
+      6
+    ]
+  }
+},
+{
+  "model": "setupsystem.dailyscheduletime",
+  "pk": 3,
+  "fields": {
+    "time": [
+      1,
+      4,
+      6,
+      9,
+      10
+    ]
+  }
+},
+{
+  "model": "setupsystem.dailyscheduletime",
+  "pk": 4,
+  "fields": {
+    "time": [
+      9,
+      10
+    ]
+  }
+},
+{
+  "model": "setupsystem.dailyscheduletime",
+  "pk": 5,
+  "fields": {
+    "time": [
+      1,
+      3,
+      7,
+      10
+    ]
+  }
+},
+{
+  "model": "setupsystem.dailyscheduletime",
+  "pk": 6,
+  "fields": {
+    "time": [
+      2,
+      6,
+      10
+    ]
+  }
+},
+{
+  "model": "setupsystem.dailyscheduletime",
+  "pk": 7,
+  "fields": {
+    "time": [
+      2,
+      3,
+      5,
+      6,
+      10
+    ]
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 15,
+  "fields": {
+    "user": [
+      "kelvin"
+    ],
+    "email": "",
+    "phonenumber": "",
+    "avatar": "",
+    "bio": ""
+  }
+},
+{
+  "model": "accounts.profile",
+  "pk": 16,
+  "fields": {
+    "user": [
+      "unicross"
+    ],
+    "email": "unicross@crutech.com",
+    "phonenumber": "",
+    "avatar": "",
+    "bio": ""
+  }
+}
+]

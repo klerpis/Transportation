@@ -1,0 +1,137 @@
+[
+{
+  "model": "setupsystem.location",
+  "pk": 1,
+  "fields": {
+    "state": "AkwaIbom",
+    "local_government": "Uyo",
+    "bus_stop": "Aktc Main Bustop",
+    "street": "main street",
+    "lat": null,
+    "lng": null,
+    "image": "location/asaba-2.jpg",
+    "description": "",
+    "featured": true
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 2,
+  "fields": {
+    "state": "Cross River",
+    "local_government": "Calabar",
+    "bus_stop": "Main Gate Stop",
+    "street": "Etagbor",
+    "lat": null,
+    "lng": null,
+    "image": "location/Asaba_2w.jpg",
+    "description": "",
+    "featured": true
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 3,
+  "fields": {
+    "state": "Rivers",
+    "local_government": "Port Harcourt",
+    "bus_stop": "Ikwerre Road",
+    "street": "Ikwerre Road",
+    "lat": null,
+    "lng": null,
+    "image": "location/Summit_road_Asaba.jpeg",
+    "description": "",
+    "featured": true
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 4,
+  "fields": {
+    "state": "Rivers",
+    "local_government": "Gokana",
+    "bus_stop": "Elelenwo Street",
+    "street": "Elelenwo Street",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 5,
+  "fields": {
+    "state": "Benin",
+    "local_government": "Oredo",
+    "bus_stop": "Ring Road",
+    "street": "Ring Road",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 6,
+  "fields": {
+    "state": "Benin",
+    "local_government": "Egor",
+    "bus_stop": "Obazee Close",
+    "street": "Obazee Close",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 7,
+  "fields": {
+    "state": "Enugu",
+    "local_government": "Enugu North",
+    "bus_stop": "Opkara Avenue",
+    "street": "Opkara Avenue",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 8,
+  "fields": {
+    "state": "Enugu",
+    "local_government": "Enugu South",
+    "bus_stop": "Nnobi Street",
+    "street": "Nnobi Street",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+},
+{
+  "model": "setupsystem.location",
+  "pk": 9,
+  "fields": {
+    "state": "Delta",
+    "local_government": "Asaba",
+    "bus_stop": "Abraka",
+    "street": "Isoko",
+    "lat": null,
+    "lng": null,
+    "image": "",
+    "description": null,
+    "featured": false
+  }
+}
+]

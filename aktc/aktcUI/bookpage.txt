@@ -1,0 +1,91 @@
+// compact card
+export default function BookingCard({ booking, onCancel, onTrack, handleOpenFeedbackModal }) {
+  const { id, from_location, to_location, departure_date, departure_time, status, isUpcoming } = booking; 
+  return (
+    <Card elevation={3}>
+      <CardContent>
+        <Typography variant="h6">
+          {from_location} → {to_location}
+        </Typography>
+        <Typography color="text.secondary" gutterBottom>
+          {departure_date} at {departure_time}
+        </Typography>
+        <Typography variant="body2">Booking ID: {id}</Typography>
+
+        <Box sx={{ mt: 1, mb: 2 }}>
+          <Chip 
+            label={status}
+            color={status === 'confirmed' ? 'success' : status === 'completed' ? 'default': 'error'}
+            clickable={true}
+            sx={{ mr: 1 }}
+
+          />
+          {renderFeedbackChip(booking, handleOpenFeedbackModal)}
+        </Box>
+
+        <Stack direction="row" spacing={2}>
+          {isUpcoming && (
+            <>
+              <Button variant="outlined" color="error" onClick={() => onCancel(id)}>
+                Cancel
+              </Button>
+              <Button variant="contained" color="primary" onClick={() => onTrack(id)}>
+                Track
+              </Button>
+            </>
+          )}
+        </Stack>
+      </CardContent>
+    </Card>
+  );
+}
+
+
+
+// wide card
+  const renderWideCard = (b) => (
+    <Stack spacing={2} mt={1}>
+      <Card key={b.booking_id || b.id}>
+        <CardContent>
+          <Typography variant="h6">{b.from_location} → {b.to_location}</Typography>
+          <Typography>Date: {b.departure_date} — Time: {b.departure_time}</Typography>
+          <Typography>Status: {b.status}</Typography>
+          <Typography>Passengers: {b.passenger_count}</Typography>
+          <Stack direction="row" spacing={1} mt={1}>
+            {/* <Button onClick={() => openFeedbackModal(booking)}>Leave Feedback</Button> */}
+            {b.feedback_submitted === true  && (
+              <Button size="small" variant="outlined" onClick={() => handleOpenFeedbackModal(b)}>Feedback</Button>
+            )}
+            <Button size="small" variant="contained" onClick={() => handleTrack(b)}>Track</Button>
+          </Stack>
+        </CardContent>
+      </Card>
+    </Stack>
+  );
+
+
+// data gotten from api
+
+Object { booking_id: "BOOK-20250707-1C45A", from_location: "Aktc Main Bustop", to_location: "Main Gate Stop", … }
+​​
+book_created: "2025-07-07T17:10:29.523501Z"
+​​
+booking_id: "BOOK-20250707-1C45A"
+​​
+departure_date: "2025-07-09"
+​​
+departure_time: "11:00AM"
+​​
+fare: null
+​​
+feedback_submitted: false
+​​
+from_location: "Aktc Main Bustop"
+​​
+num_of_pass: 1
+​​
+status: "Success"
+​​
+to_location: "Main Gate Stop"
+​​
+trip: 147 // we'll grab more of the trip data later

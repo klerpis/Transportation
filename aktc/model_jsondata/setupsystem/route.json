@@ -1,0 +1,310 @@
+[
+{
+  "model": "setupsystem.route",
+  "pk": 1,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 1,
+    "fare": 6000,
+    "journey_average_length": "03:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 2,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 2,
+    "fare": 6000,
+    "journey_average_length": "03:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 3,
+  "fields": {
+    "from_location": 3,
+    "to_destination": 1,
+    "fare": 9000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 4,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 3,
+    "fare": 9000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 5,
+  "fields": {
+    "from_location": 4,
+    "to_destination": 1,
+    "fare": 9000,
+    "journey_average_length": "05:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 6,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 4,
+    "fare": 9000,
+    "journey_average_length": "05:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 7,
+  "fields": {
+    "from_location": 5,
+    "to_destination": 1,
+    "fare": 10000,
+    "journey_average_length": "09:30:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 8,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 5,
+    "fare": 10000,
+    "journey_average_length": "09:30:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 9,
+  "fields": {
+    "from_location": 6,
+    "to_destination": 1,
+    "fare": 9000,
+    "journey_average_length": "09:22:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 10,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 6,
+    "fare": 9000,
+    "journey_average_length": "09:22:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 11,
+  "fields": {
+    "from_location": 7,
+    "to_destination": 1,
+    "fare": 11000,
+    "journey_average_length": "10:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 12,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 7,
+    "fare": 11000,
+    "journey_average_length": "10:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 13,
+  "fields": {
+    "from_location": 8,
+    "to_destination": 1,
+    "fare": 11000,
+    "journey_average_length": "10:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 14,
+  "fields": {
+    "from_location": 1,
+    "to_destination": 8,
+    "fare": 11000,
+    "journey_average_length": "10:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 15,
+  "fields": {
+    "from_location": 3,
+    "to_destination": 2,
+    "fare": 5000,
+    "journey_average_length": "02:50:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 16,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 3,
+    "fare": 5000,
+    "journey_average_length": "02:50:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 17,
+  "fields": {
+    "from_location": 4,
+    "to_destination": 2,
+    "fare": 4500,
+    "journey_average_length": "02:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 18,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 4,
+    "fare": 4500,
+    "journey_average_length": "02:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 19,
+  "fields": {
+    "from_location": 5,
+    "to_destination": 2,
+    "fare": 7000,
+    "journey_average_length": "07:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 20,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 5,
+    "fare": 7000,
+    "journey_average_length": "07:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 21,
+  "fields": {
+    "from_location": 6,
+    "to_destination": 2,
+    "fare": 7000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 22,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 6,
+    "fare": 7000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 23,
+  "fields": {
+    "from_location": 7,
+    "to_destination": 2,
+    "fare": 11200,
+    "journey_average_length": "10:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 24,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 7,
+    "fare": 11200,
+    "journey_average_length": "10:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 25,
+  "fields": {
+    "from_location": 8,
+    "to_destination": 2,
+    "fare": 12000,
+    "journey_average_length": "11:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 26,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 8,
+    "fare": 12000,
+    "journey_average_length": "11:00:00",
+    "add_reverse": true
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 27,
+  "fields": {
+    "from_location": 2,
+    "to_destination": 9,
+    "fare": 25000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": false
+  }
+},
+{
+  "model": "setupsystem.route",
+  "pk": 28,
+  "fields": {
+    "from_location": 9,
+    "to_destination": 2,
+    "fare": 25000,
+    "journey_average_length": "06:00:00",
+    "add_reverse": true
+  }
+}
+]

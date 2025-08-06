@@ -1,0 +1,92 @@
+[
+{
+  "model": "setupsystem.departuretime",
+  "pk": 1,
+  "fields": {
+    "hour": "08",
+    "minute": "00",
+    "meridian": "AM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 2,
+  "fields": {
+    "hour": "07",
+    "minute": "30",
+    "meridian": "AM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 3,
+  "fields": {
+    "hour": "10",
+    "minute": "30",
+    "meridian": "AM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 4,
+  "fields": {
+    "hour": "11",
+    "minute": "05",
+    "meridian": "AM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 5,
+  "fields": {
+    "hour": "12",
+    "minute": "05",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 6,
+  "fields": {
+    "hour": "02",
+    "minute": "00",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 7,
+  "fields": {
+    "hour": "04",
+    "minute": "25",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 8,
+  "fields": {
+    "hour": "07",
+    "minute": "30",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 9,
+  "fields": {
+    "hour": "09",
+    "minute": "15",
+    "meridian": "PM"
+  }
+},
+{
+  "model": "setupsystem.departuretime",
+  "pk": 10,
+  "fields": {
+    "hour": "11",
+    "minute": "30",
+    "meridian": "PM"
+  }
+}
+]

@@ -1,0 +1,42 @@
+[
+{
+  "model": "aktcUI.paymentmethod",
+  "pk": 1,
+  "fields": {
+    "title": "Credit/Debit Card",
+    "name": "card",
+    "is_default": true,
+    "reference": null
+  }
+},
+{
+  "model": "aktcUI.paymentmethod",
+  "pk": 2,
+  "fields": {
+    "title": "Bank Transfer",
+    "name": "transfer",
+    "is_default": true,
+    "reference": null
+  }
+},
+{
+  "model": "aktcUI.paymentmethod",
+  "pk": 3,
+  "fields": {
+    "title": "Wallet Balance",
+    "name": "wallet",
+    "is_default": false,
+    "reference": null
+  }
+},
+{
+  "model": "aktcUI.paymentmethod",
+  "pk": 4,
+  "fields": {
+    "title": "Pay with Cash",
+    "name": "cash",
+    "is_default": false,
+    "reference": null
+  }
+}
+]

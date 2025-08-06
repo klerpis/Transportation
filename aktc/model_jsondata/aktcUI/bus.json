@@ -1,0 +1,22 @@
+[
+{
+  "model": "aktcUI.bus",
+  "pk": 1,
+  "fields": {
+    "registration_number": "B4B27DBN2Q",
+    "bus_name": "Night bus 2015",
+    "bus_seat_num": 14,
+    "bus_status": "RN"
+  }
+},
+{
+  "model": "aktcUI.bus",
+  "pk": 2,
+  "fields": {
+    "registration_number": "NDU2BDEBY2",
+    "bus_name": "Day Shift Bus 2020",
+    "bus_seat_num": 14,
+    "bus_status": "RN"
+  }
+}
+]

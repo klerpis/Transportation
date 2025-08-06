@@ -32,13 +32,13 @@ SECRET_KEY = 'django-insecure-%(x+i=f3z_zi1($wzhhu8x9bt5%jq&t1ahl+n^r^bvy*^i+jw%
 # SECRET_KEY = 'django-insecure-%(x+i=f3z_zi1($diuywzhhu8x9bt5%jqokdpij&t1ahl+n^r^bvy*^i+jw%'
 SECRET_KEY = os.environ.get('SECRET_KEY', default=SECRET_KEY)
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = False
+DEBUG = False
 # DEBUG = 'RENDER' not in os.environ
-DEBUG = True
+# DEBUG = True
 
 # ['bookingaktc.onrender.com', "localhost:8000", ]
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ["bookingaktc.onrender.com", "localhost", '127.0.0.1']
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["bookingaktc.onrender.com", "localhost", '127.0.0.1']
 
 
 

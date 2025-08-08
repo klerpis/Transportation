@@ -59,7 +59,6 @@ class Route(models.Model):
         return super().save(*args, **kwargs)
 
 
-
 class DepartureTime(models.Model):
     MERIDIAN_CHOICE = {
         "AM": 'am',
@@ -83,24 +82,24 @@ class DepartureTime(models.Model):
         return f"{self.hour}:{self.minute}{self.meridian}"
 
     class Meta:
-        verbose_name  = 'Departure Time (hour of day)'
-        verbose_name_plural  = 'Departure Time (hour of day)'
+        verbose_name = 'Departure Time (hour of day)'
+        verbose_name_plural = 'Departure Time (hour of day)'
 
     # def __repr__(self):
     #     return super().__repr__()
 
 
-
 class DailyScheduleTime(models.Model):
     time = models.ManyToManyField(
         DepartureTime, related_name='daily_schedule_time')
-    
+
     class Meta:
-        verbose_name  = 'Daily Schedule (Time)'
-        verbose_name_plural  = 'Daily Schedule (Multiple Departure Times per day)'
+        verbose_name = 'Daily Schedule (Time)'
+        verbose_name_plural = 'Daily Schedule (Multiple Departure Times per day)'
 
     def __str__(self):
         return f'{" || ".join([f"{i.hour}.{i.minute}{i.meridian}" for i in self.time.all()])}'
+
 
 class PreviousSchedule(models.Model):
     start_or_only_date = models.DateField(
@@ -114,6 +113,7 @@ def generate_int_id():
     code = int(uuid.uuid4())
     # gen_id = f"{previous_day_date}-{code}"
     return code
+
 
 def generate_id():
     code = int(str(int(uuid.uuid4()))[:random.randint(1, 9)])
@@ -155,6 +155,7 @@ class WeekDaysSchedule(models.Model):
         return f'Day: {str(week[week_index]).center(10, " ")} || Dates: {self.start_or_only_date} || Departure Times: {self.daily_schedule}'
 
     previous_date_list = set()
+
     def clean(self):  # for end date validation
 
         if self.end_date is not None:
@@ -179,10 +180,10 @@ class WeekDaysSchedule(models.Model):
                 #     )
                 # if len(default) > 0:
                 #     print("5 Error")
-                    
+
                 #     raise exceptions.ValidationError(
                 #         _("Dates in-between start and end date already exist in the database"))
-                    # continue  # if date already exsit in database. then ignore
+                # continue  # if date already exsit in database. then ignore
                 # if self.end_date == previous_day_date: continue
                 self.previous_date_list.add(previous_day_date)
         # else:
@@ -194,10 +195,10 @@ class WeekDaysSchedule(models.Model):
         #         raise exceptions.ValidationError(
         #             _("Dates in-between start and end date already exist in the database"))
 
-
         return super().clean()
 
     initial_week_day_check = False
+
     def save(self, *args, **kwargs):
 
         if hasattr(self, 'id') and (not self.id):
@@ -236,4 +237,3 @@ class WeekDaysSchedule(models.Model):
 #         authors = instance.authors.all()  # ✅ M2M data is ready
 #         print(f"Updated authors for {instance.title}: {authors}")
 #         # Run your logic here
-

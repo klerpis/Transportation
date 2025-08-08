@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from setupsystem.models import (Location, Route,)
 
 from .models import (
-    Payment, PaymentMethod, Booking, 
+    Payment, PaymentMethod, Booking,
     Trip, Customer,
     BusDetail
 )
@@ -45,7 +45,7 @@ class PaymentStatusAPIView(APIView):
             return Response({"error": "Payment not found"}, status=status.HTTP_404_NOT_FOUND)
         print(booking_id, payment, payment.status)
         return Response({"status": payment.status})
-    
+
     def patch(self, request, booking_id):
         print("booking_id", booking_id, request)
         print(request.data)
@@ -61,8 +61,7 @@ class PaymentStatusAPIView(APIView):
             payment.status = payment_status
             payment.save()
             # payment.booking.save()
-            return Response(PaymentSerializer(payment).data) 
-
+            return Response(PaymentSerializer(payment).data)
 
 
 class CUserDetailView(generics.RetrieveAPIView):
@@ -96,7 +95,6 @@ class PaymentRetrieveAPIView(generics.RetrieveAPIView):
         return Payment.objects.filter(booking__booking_id=booking_id).first()
 
 
-
 class PaymentHistoryAPIView(generics.ListAPIView):
     serializer_class = PaymentSerializer
     permission_classes = [IsAuthenticated]
@@ -124,7 +122,7 @@ class PaymentUpdateAPIView(generics.UpdateAPIView):
             # instance.booking.status = 'confirmed' if payment_status == 'success' else 'failed'
             instance.status = payment_status
             instance.save()
-            return Response(PaymentSerializer(instance).data) 
+            return Response(PaymentSerializer(instance).data)
 
         if not new_method:
             return Response({"error": "No method provided"}, status=400)
@@ -145,12 +143,14 @@ class PaymentUpdateAPIView(generics.UpdateAPIView):
         # Optional: redirect or simulate route logic based on method
         return Response(PaymentSerializer(instance).data)
 
+
 def generate_id():
     gener = ['dioucbyg', 'ifdcyugd', 'ncidgyu', 'jdcbheu', 'dbh', 'fdu',
-    'der', 'd3ex', 'derqr', 'fergry']
+             'der', 'd3ex', 'derqr', 'fergry']
     code = str(int(uuid.uuid4()))[:random.randint(1, 9)]
     gen_id = f"{random.choice(gener)}-{code}"
     return code
+
 
 class BookingCreateAPIView(generics.CreateAPIView):
     queryset = Booking.objects.all()
@@ -160,7 +160,8 @@ class BookingCreateAPIView(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         print('REQUEST', request.data, self.request.user, )
-        print("self.request.user.is_authenticated()", self.request.user.is_authenticated)
+        print("self.request.user.is_authenticated()",
+              self.request.user.is_authenticated)
 
         trip_id = request.data.pop("trip_id", None)
         customer_email = request.data.get("email", None)
@@ -168,36 +169,37 @@ class BookingCreateAPIView(generics.CreateAPIView):
         to_destination = request.data.pop("destination_to", None)
         user = self.request.user
 
-        
         trip = Trip.objects.filter(trip_id=trip_id).first()
-        
-        customer_user  = None
+
+        customer_user = None
         try:
             if user.is_authenticated:
                 customer_user = Customer.objects.filter(user=user).first()
             else:
 
-                customer_user = Customer.objects.filter(email=customer_email).first()
+                customer_user = Customer.objects.filter(
+                    email=customer_email).first()
                 if not customer_user:
-                    user = User.objects.create_user(email=instance.email, 
-                    username=f"{request.data.get('first_name', '')}{request.data.get('last_name', '')}".lower(), 
-                    password=generate_id())
-                    customer_user =  Customer.objects.create(user=user, 
-                    firstname=request.data.get('first_name', ''), 
-                    surname=request.data.get('last_name', ''))
+                    user = User.objects.create_user(email=customer_email,
+                                                    username=f"{request.data.get('first_name', '')}{request.data.get('last_name', '')}".lower(
+                                                    ),
+                                                    password=generate_id())
+                    customer_user = Customer.objects.create(user=user,
+                                                            firstname=request.data.get(
+                                                                'first_name', ''),
+                                                            surname=request.data.get('last_name', ''))
 
         except Exception as e:
             print("ERRORRRRRRRRR", e)
         finally:
             print("Finally-----", )
             if not customer_user:
-                print("Finally all user creation failed" )
-                
-                customer_user = Customer.objects.create(
-                                        email=customer_email,
-                                        firstname=request.data.get('first_name', ''),
-                                        surname=request.data.get('last_name', ''),)
+                print("Finally all user creation failed")
 
+                customer_user = Customer.objects.create(
+                    email=customer_email,
+                    firstname=request.data.get('first_name', ''),
+                    surname=request.data.get('last_name', ''),)
 
         booked_route = Route.objects.filter(
             from_location__bus_stop=from_location, to_destination__bus_stop=to_destination).first()
@@ -228,6 +230,14 @@ class BookingCreateAPIView(generics.CreateAPIView):
             status='confirmed'  # but not "completed" as payment completes it
         )
 
+        print()
+        print()
+        print()
+        print("Booking in between", booking.trip)
+        print()
+        print()
+        print("Booking in between", booking.trip.trip_id)
+        print()
         print()
 
         print("Booking Api SECOND", serializer)
@@ -337,10 +347,10 @@ class BookingCreateAPIView(generics.CreateAPIView):
     #     }, status=status.HTTP_201_CREATED)
 
 
-
 class BookingListAPIView(generics.ListAPIView):
     serializer_class = BookingListSerializer
-    permission_classes = [IsAuthenticated]  # You can make this IsAuthenticated later if needed
+    # You can make this IsAuthenticated later if needed
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         # email = self.request.query_params.get('email')
@@ -350,9 +360,9 @@ class BookingListAPIView(generics.ListAPIView):
         if user:
             # data = queryset.filter(customer__user=user).order_by('-book_created_at')
             # print("DATATATQ", data)
-            return queryset 
+            return queryset
         else:
-            return Booking.objects.none() 
+            return Booking.objects.none()
 
 
 # elif email:
@@ -381,12 +391,11 @@ class TripListAPIView(generics.ListAPIView):
             print((date and from_ and to_))
             print()
             print(date)
-            queryset = queryset.filter(trip_departure_date=datetime.today().strftime('%Y-%m-%d')) 
-
+            queryset = queryset.filter(
+                trip_departure_date=datetime.today().strftime('%Y-%m-%d'))
 
         # print('queryset', [i.trip_departure_time for i in queryset])
         return queryset.order_by('trip_departure_time')
-
 
 
 class TripLiveLocationAPIView(generics.ListAPIView):

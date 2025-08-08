@@ -40,7 +40,7 @@ def generate_trip_id():
 def post_save_create_trips(sender, instance, action, **kwargs):
     print("whatuuuuuuuuuuuuuuuuuuuuuuuuuu")
 
-    if action == "post_add": # or action == "post_remove":
+    if action == "post_add":  # or action == "post_remove":
         print("beginning created Id", instance.id, instance.trip_route.all(),
               instance.start_or_only_date)
         all_weekdays = []
@@ -49,14 +49,13 @@ def post_save_create_trips(sender, instance, action, **kwargs):
         print('its started')
         # instance_new_data = WeekDaysSchedule.objects.filter(
         #     start_or_only_date=instance.start_or_only_date,)
-            
+
         # if not created:
         #     new_data.id = generate_id()
         #     new_data.initial_week_day_check = False
         #     # new_data.trip_route.set([])
         #     new_data.trip_route.clear()
         # new_data.daily_schedule=instance.daily_schedule,
-
 
         if instance.end_date:
             print('its started 2')
@@ -69,20 +68,25 @@ def post_save_create_trips(sender, instance, action, **kwargs):
                     new_data_list = WeekDaysSchedule.objects.filter(
                         start_or_only_date=previous_day_date,)
                     if len(new_data_list) < 1:
-                        new_data = WeekDaysSchedule(start_or_only_date=previous_day_date,)
+                        new_data = WeekDaysSchedule(
+                            start_or_only_date=previous_day_date,)
                         new_data.id = generate_id()
                     elif len(new_data_list) > 1:
-                        new_data = new_data_list.filter(daily_schedule=instance.daily_schedule,).first()
-                        old_data = new_data_list.exclude(daily_schedule=instance.daily_schedule,).first()
-                        Trip.objects.filter(trip_departure_date=previous_day_date).delete()
+                        new_data = new_data_list.filter(
+                            daily_schedule=instance.daily_schedule,).first()
+                        old_data = new_data_list.exclude(
+                            daily_schedule=instance.daily_schedule,).first()
+                        Trip.objects.filter(
+                            trip_departure_date=previous_day_date).delete()
                         old_data.delete()
 
                         # raise Exception("Greater than 1 error", len(new_data_list), new_data_list)
                     else:
                         new_data = new_data_list[0]
                     new_data.initial_week_day_check = False
-                    new_data.daily_schedule=instance.daily_schedule
-                    new_data.trip_route.set(instance.trip_route.all(), clear=False)
+                    new_data.daily_schedule = instance.daily_schedule
+                    new_data.trip_route.set(
+                        instance.trip_route.all(), clear=False)
 
                     # instance.previous_date_list.remove(previous_day_date)
                     all_weekdays.append(new_data)
@@ -101,10 +105,11 @@ def post_save_create_trips(sender, instance, action, **kwargs):
         # date trips inbetween and end date
         if instance.initial_week_day_check:
             for t_route in instance.trip_route.all():
+                print("A single route", t_route, )
                 for period in instance.daily_schedule.time.all():
                     for previous_day_date in date_list:
                         print("period created Id", instance.id, period,
-                            instance.daily_schedule.time.all())
+                              instance.daily_schedule.time.all())
                         if Trip.objects.filter(
                             trip_departure_date=previous_day_date,
                             trip_departure_time=period, route=t_route
@@ -112,7 +117,7 @@ def post_save_create_trips(sender, instance, action, **kwargs):
                             print("trip already exists", instance.id)
                             continue
                         else:
-                            all_trips.append(Trip(
+                            trip = Trip(
                                 trip_id=generate_trip_id(),
                                 route=t_route,
                                 trip_departure_date=previous_day_date,
@@ -122,8 +127,10 @@ def post_save_create_trips(sender, instance, action, **kwargs):
                                 # trip_id='', # will be generated in trip save
                                 # seats_booked='', # defaults to zero
                                 # bus_detail='', #
-                            ))
-                    # for the original ---------                        
+                            )
+                            all_trips.append(trip)
+
+                    # for the original ---------
                     print('its started4')
                     if Trip.objects.filter(
                         trip_departure_date=instance.start_or_only_date,
@@ -133,7 +140,7 @@ def post_save_create_trips(sender, instance, action, **kwargs):
                         continue
                         # break # dont let multiple repeated departure set
                     else:
-                        all_trips.append(Trip(
+                        trip = Trip(
                             trip_id=generate_trip_id(),
                             route=t_route,
                             trip_departure_date=instance.start_or_only_date,
@@ -143,27 +150,32 @@ def post_save_create_trips(sender, instance, action, **kwargs):
                             # trip_id='', # will be generated in trip save
                             # seats_booked='', # defaults to zero
                             # bus_detail='', #
-                    ))
-                        
-                            # trip.save()
-        
+                        )
+                        all_trips.append(trip)
+
+                        # trip.save()
+
         # WeekDaysSchedule.objects.bulk_create(all_weekdays)
         print('its started5')
-        if all_trips: Trip.objects.bulk_create(all_trips)
-
+        try:
+            if all_trips:
+                Trip.objects.bulk_create(all_trips)
+        except Exception as e:
+            print("ERRRRRooo", e)
+            raise Exception(e)
         print('its started6')
         multiple_instance = WeekDaysSchedule.objects.filter(
-                            start_or_only_date=instance.start_or_only_date)
+            start_or_only_date=instance.start_or_only_date)
         if len(multiple_instance) > 1:
             # current_instance = list(filter(
             #     lambda arg: arg is instance, multiple_instance))[0]
             first_instance = list(filter(
                 lambda arg: arg is not instance, multiple_instance))[0]
 
-
-            first_instance.daily_schedule=instance.daily_schedule
+            first_instance.daily_schedule = instance.daily_schedule
             # first_instance.trip_route.clear()
-            first_instance.trip_route.set(instance.trip_route.all(), clear=False)
+            first_instance.trip_route.set(
+                instance.trip_route.all(), clear=False)
 
             instance.delete()
         else:
@@ -172,9 +184,5 @@ def post_save_create_trips(sender, instance, action, **kwargs):
         for weekdays in all_weekdays:
             weekdays.initial_week_day_check = False
             weekdays.save()
-        
+
         print('its started7')
-        
-        
-
-

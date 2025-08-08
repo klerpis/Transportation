@@ -41,8 +41,6 @@ DEBUG = False
 ALLOWED_HOSTS = ["bookingaktc.onrender.com", "localhost", '127.0.0.1']
 
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -125,8 +123,6 @@ WSGI_APPLICATION = 'aktc.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 
-
-
 if os.getenv('RENDER'):
     default = os.getenv("DATABASE_URL")
     DATABASES = {
@@ -135,7 +131,7 @@ if os.getenv('RENDER'):
             default=default,
             conn_max_age=600,
             ssl_require=True
-            )
+        )
     }
 
 
@@ -147,7 +143,7 @@ else:
             default=default,
             conn_max_age=600,
             ssl_require=True
-            )
+        )
     }
     # DATABASES = {
     #     'default': {
@@ -157,7 +153,6 @@ else:
     # }
 
 
-
 # DATABASES = {
 #     'default': dj_database_url.config(
 #         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
@@ -165,8 +160,6 @@ else:
 #         ssl_require=True  # Optional but good for hosted DB
 #     )
 # }
-
-
 
 
 # DATABASES = {
@@ -222,7 +215,6 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 
 if not DEBUG:

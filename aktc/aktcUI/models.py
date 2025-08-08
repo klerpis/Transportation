@@ -19,6 +19,7 @@ from setupsystem.models import Route, Location, WeekDaysSchedule
 
 # User = get_user_model()
 
+
 class Customer(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, verbose_name="Customer's Name", on_delete=models.CASCADE,
@@ -33,16 +34,15 @@ class Customer(models.Model):
         return f"{self.firstname}  || {self.email} "
 
 
-
-
 class Driver(models.Model):
     driver_name = models.ForeignKey(
-        settings.AUTH_USER_MODEL, verbose_name="Driver's Name", 
+        settings.AUTH_USER_MODEL, verbose_name="Driver's Name",
         on_delete=models.CASCADE)
     driver_phonenumber = models.CharField(
         "Driver's Phone Number", max_length=18, null=False, blank=False)
     email = models.EmailField(null=False, blank=False, unique=True)
-    passport = models.ImageField(upload_to='passport', null=True, blank=True)  # not compulsory yet
+    passport = models.ImageField(
+        upload_to='passport', null=True, blank=True)  # not compulsory yet
     known_routes = models.ManyToManyField(
         Route, related_name='known_routes', blank=True)
     current_location = models.ForeignKey(
@@ -88,6 +88,7 @@ class BusDetail(models.Model):
             '''
         return self.return_
 
+
 def generate_trip_id():
     date_part = datetime.date.today().strftime("%Y%m%d%H%M%S%p%j")
     random_part = uuid.uuid4().hex[:5].upper()
@@ -102,7 +103,6 @@ class Trip(models.Model):
 
     TRIP_STATUS_CHOICES = [("pending", "Pending"), ("started", "Started"),
                            ("completed", "Completed"), ("cancelled", "Cancelled")]
-
 
     # leave blank
     trip_id = models.CharField(
@@ -138,18 +138,14 @@ class Trip(models.Model):
         super().save(*args, **kwargs)
 
 
-
-
-
 'no coverage for those days yet, please pick a closer date'
-
 
 
 # class DriversRoster(models.Model):
 #     driver = models.ForeignKey(
 #         Driver, on_delete=models.SET_DEFAULT, default='Driver')
 #     dates_available = models.ManyToManyField()
-        # will be activated when algorithm is developed
+# will be activated when algorithm is developed
 
 
 class Booking(models.Model):
@@ -230,7 +226,6 @@ class Booking(models.Model):
         super().save(*args, **kwargs)
 
 
-
 class PaymentMethod(models.Model):
     title = models.CharField(max_length=45, null=True, blank=True)
     name = models.CharField(max_length=45)
@@ -246,7 +241,8 @@ class Payment(models.Model):
     STATUS_CHOICES = (("pending", "pending"), ("success",
                       "success"), ("failed", "failed"), )
 
-    booking = models.OneToOneField(Booking, related_name='payment', on_delete=models.CASCADE)
+    booking = models.OneToOneField(
+        Booking, related_name='payment', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=16, decimal_places=3)
     payment_deadline = models.DateTimeField()
     method = models.ForeignKey(
@@ -270,16 +266,14 @@ class Payment(models.Model):
             rand = uuid.uuid4().hex[:5].upper()
             self.reference = f"PAY-{today}-{rand}"
 
-        
         # if self.status == 'success':
         #     self.booking.status = 'confirmed'
         # if self.status == 'pending':
         #     self.booking.status = 'pending'
         # if self.status == 'failed':
         #     self.booking.status = 'failed'
-        
-        super().save(*args, **kwargs)
 
+        super().save(*args, **kwargs)
 
 
 # print()

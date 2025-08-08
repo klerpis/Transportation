@@ -123,7 +123,7 @@ class Trip(models.Model):
     longitude = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return f'TRIP {self.route} | on {self.trip_departure_date} | at {self.trip_departure_time} = {self.trip_id} {self.id}'
+        return f'TRIP {self.route.from_location.state} -> {self.route.to_destination.state} | on {self.trip_departure_date} | at {self.trip_departure_time} = {self.trip_id} {self.id}'
 
     def save(self, *args, **kwargs):
         # generate trip date and time using weekdaysschedule

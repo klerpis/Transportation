@@ -76,8 +76,7 @@ class BookTicketAdmin(ModelAdmin):
     inlines = [PaymentInline,]
     
     list_display = ['id', 'customer_name', 'booking_id', 
-    # 'trip_id', 
-    'status' ]
+    'trip_id', 'status' ]
     list_display_links = ['customer_name', 'booking_id']
     list_filter = ['status']
     list_editable = ['status']
@@ -211,9 +210,9 @@ class TripAdmin(ModelAdmin):
     # 'trip_fare']
     actions = [update_status_to_published]
     search_fields = ['seats_booked', 'route__from_location__state', 
-                    'route__to_destination__state',  ]
+                    'route__to_destination__state', 'trip_id' ]
     fieldsets = (
-        ('Trip Data', {"fields":  ['route', 'trip_departure_date', # 'trip_id',  
+        ('Trip Data', {"fields":  ['route', 'trip_departure_date', 'trip_id',  
         'trip_departure_time', 'trip_fare']}),
         ('Dynamic Info', {'fields': [ 'seats_booked', 'status']}),
     )
@@ -234,7 +233,7 @@ board_room.register(models.Trip, TripAdmin)
 
 class FeedbackAdmin(ModelAdmin):
     list_display = ['user', 'rating', 'booking_id', 
-        #'trip_id'
+        'trip_id'
     ]
     list_filter = ['rating']
     # list_editable = []
@@ -358,11 +357,11 @@ board_room.register(feedbackmodels.Review, ReviewAdmin)
 
 class PaymentAdmin(ModelAdmin):
     list_display = ['reference', 'amount', 
-                'booking_id', 'method', 'status']
+                'booking_id', 'trip_id', 'method', 'status']
     list_filter = ['status', 'payment_deadline']
     list_editable = ['status']
     readonly_fields = ['created', 'reference', 'booking']
-    search_fields = ['reference', 'amount']
+    search_fields = ['reference', 'booking_id', 'trip_id']
     # fieldsets = (
     #     ('Passenger Data', {"fields":  ['user', 'comment', 'rating', 
     #     'submitted_at']}),
@@ -372,6 +371,9 @@ class PaymentAdmin(ModelAdmin):
     def booking_id(self, obj):
         return obj.booking.booking_id
     
+    def trip_id(self, obj):
+        return obj.booking.trips.trip_id
+        
     def get_readonly_fields(self, request, obj=None):
         if obj:  # Editing an existing object
             # List fields that should be read-only when editing
